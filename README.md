@@ -1,9 +1,14 @@
 ![tag:innovationlab](https://img.shields.io/badge/innovationlab-3D8BD3)
 ![tag:hackathon](https://img.shields.io/badge/hackathon-5F43F1)
 
+<p align="center">
+  <img src="assets/pixel-cat.svg" width="128" alt="Pixel art cat">
+  <img src="assets/pixel-dragon.svg" width="128" alt="Pixel art dragon">
+</p>
+
 # Launch Kit Agent
 
-A friendly AI agent on Agentverse that you can chat with, and that turns a one-line product idea into a finished, audited launch kit entirely inside an ASI:One conversation: live market research, landing page copy, a 6-tweet launch thread, an SVG logo with palette and tagline, and a polished, ready-to-open landing page. It checks its own work before delivering and repairs or replaces anything that fails.
+An AI agent on Agentverse, used through ASI:One, that turns a product idea into the assets you need to launch it: a logo, a landing page, a live market comparison with suggestions on how to stand out, and a workflow plan for what to do next. Everything happens inside the chat, with no custom frontend.
 
 **Built for:** Fetch-A-Thon 3.0, ASI:One Agent Challenge: From Intent to Action.
 
@@ -11,181 +16,127 @@ A friendly AI agent on Agentverse that you can chat with, and that turns a one-l
 
 | What | Link |
 |---|---|
-| ASI:One shared chat (full workflow) | https://asi1.ai/ai/agent1qvc7sunrshhkkgg2lps6fyrpwkfy8rj45eqmexd242flwdmsz2tvux4ms6c |
-| Agentverse agent profile | (https://agentverse.ai/agents/details/agent1qvc7sunrshhkkgg2lps6fyrpwkfy8rj45eqmexd242flwdmsz2tvux4ms6c/profile) |
+| ASI:One shared chat (full workflow) | `<add shared chat URL>` |
+| Agentverse agent profile | `<add agent profile URL>` |
+| Demo video | `<add video URL>` |
 
 ## The problem
 
-Launching a product means producing a pile of assets (copy, social posts, a logo, a page) and doing market homework first. Most AI tools return one unchecked blob of text, and the person still has to verify it, fix it and assemble it.
+Launching a product means doing market homework, creating a brand, building a page and deciding what to do next. Founders, students and small teams rarely have a designer, a marketer and a strategist on hand, and generic AI chat gives advice without producing anything usable or checking the real market.
 
 ## Target users
 
-Solo founders, indie makers, students and small teams who need a credible launch kit fast and have no designer, copywriter or time.
+Solo founders, indie makers, students and small teams who need a credible launch starting point quickly.
 
 ## The outcome
 
-From a message like *"Launch my travel planning app called Wanderly. Tone: playful."* the agent delivers, in the same chat:
+From a short description of a product, the agent produces in the same conversation:
 
-1. **Live research** with source links (Hacker News, Wikipedia, and your product page if you give a URL)
-2. **Landing page copy:** headline, subhead, 3 benefits, call to action, a 3-step "how it works" and a 3-question FAQ
-3. **A 6-tweet launch thread**, every tweet at or under 280 characters
-4. **An SVG logo,** a 4-colour palette and a 6-word tagline (three logo styles across six palettes)
-5. **A polished single-file landing page** (details below) that opens in any browser
-6. **An audit report** (23 automated checks) and a receipt showing what ran live and what fell back
-7. Optionally, a **private GitHub Gist** containing the page, logo and thread
-
-### The landing page
-
-The generated page is one self-contained HTML file with no scripts and no external requests:
-
-- Sticky navigation with the logo, section links and a call-to-action button
-- Gradient hero with logo, tagline pill, headline, subhead and two buttons
-- Feature cards with icons, a numbered "how it works" section, and live source cards ("what people are talking about") when research succeeded
-- The launch thread rendered as tweet-style cards, and an FAQ accordion that works without JavaScript
-- A closing call-to-action band and footer
-- Responsive from phone to desktop, automatic dark mode, smooth scrolling and entrance animations that switch off for people who prefer reduced motion
-- Accessible markup: semantic landmarks, labelled logo, visible keyboard focus, and text/background contrast checked across all six colour palettes
-- Add a URL or an email (`email: you@example.com`) to your message and the buttons link there; otherwise they scroll to the launch thread
-
-## It also just chats
-
-You do not have to start with a command. The agent holds a normal conversation and gently steers toward building when you mention an idea:
-
-- Greetings, small talk, thanks and "what can you do" get natural replies.
-- Say *"I have an idea"* and it asks what you are building, then builds it.
-- Say *"I'm building a notes app for students"* and it offers to build the kit; reply `yes` to start.
-- With an `ASI_API_KEY`, open-ended chat is answered by the LLM and remembers the last few turns. Without it, built-in replies are used, so chat always works.
+1. **Market comparison:** live web research on competitors and alternatives, with a comparison of your product against them
+2. **Suggestions to stand out:** concrete ideas for positioning and differentiation based on that research
+3. **A logo** as an SVG you can save and use
+4. **A landing page** as a single HTML file you can open in a browser
+5. **A workflow plan:** recommended next steps and how the product can continue to grow
 
 ## How it works
 
 ```mermaid
-flowchart TD
-    U[Message in ASI:One] --> R{Router}
-    R -- chat or question --> C[Chat reply: LLM or built-in]
-    R -- "diag" --> Dg[Health check]
-    R -- idea or follow-up --> P[PLAN: idea, name, tone, link]
-    P --> RS[RESEARCH: Hacker News, Wikipedia, product page]
-    RS --> W[WRITE: LLM copy or audited template]
-    W --> A{AUDIT: 23 checks}
-    A -- fail --> F[FIX: one repair retry, else template]
-    F --> A
-    A -- pass --> D[DESIGN: SVG logo, palette, tagline]
-    D --> B[BUILD: landing page]
-    B --> G[PUBLISH: optional private Gist]
-    G --> O[DELIVER: copy, thread, logo, page, receipt]
+flowchart LR
+    U[User in ASI:One] --> A[Launch Kit Agent on Agentverse]
+    A --> T[Tavily: live web search for competitors and alternatives]
+    T --> G[Groq LLM: compare, suggest, write]
+    G --> L[Logo SVG]
+    G --> W[Landing page HTML]
+    G --> S[Suggestions to stand out]
+    G --> F[Workflow plan]
+    L --> O[Delivered in the chat]
+    W --> O
+    S --> O
+    F --> O
 ```
 
-Every step is narrated in the chat with a label (PLAN, RESEARCH, WRITE, FIX, DESIGN, AUDIT, PUBLISH, RECEIPT), so the work is easy to follow and verify.
-
-**Reliability built in**
-
-- Each web call has a short timeout; slow optional steps are skipped and reported, with a 45-second job limit.
-- If live research fails, it falls back to cached sources and says so.
-- If the LLM is missing, errors or returns copy that fails the audit, it retries once with the audit feedback, then falls back to an audited template. The reason is shown in the chat.
-- Unexpected errors are reported with the error name instead of failing silently.
-- A `diag` command checks the Python and `uagents` versions, storage, network access, the LLM key and model, and the GitHub token.
+- **Tavily** provides real-time web search, so the competitor analysis uses current information instead of model memory.
+- **Groq** runs the language model that compares your product to the market and writes the suggestions, logo, page and plan.
+- The agent is a uAgent that implements the **Agent Chat Protocol**, is hosted on **Agentverse**, and is discoverable and usable through **ASI:One**.
 
 ## Try it
 
-Send any of these in ASI:One (or the agent's chat in Agentverse):
+Send a message like these in ASI:One:
 
 | Prompt | What to expect |
 |---|---|
-| `hi` / `how are you?` / `what can you do` | A friendly reply, no build |
-| `I have an idea` | It asks what you are building, then builds it |
-| `I'm building a notes app for students` | It offers a launch kit; reply `yes` |
-| `Launch my travel planning app called Wanderly. Tone: playful.` | The full run, ending in an audit PASS and a receipt |
-| `Launch my todo app called Taskly. Tone: bold` | Same flow; "todo" is handled correctly by the audit |
-| `I want to promote a vegan bakery in Dehradun. Tone: professional` | Works without a brand name; one is derived |
-| `Launch my fitness tracker called PulseFit https://example.com email: hi@example.com` | Reads your product page; buttons link to your URL |
-| `make it bold` / `rename it to Zoomly` | Reruns your last idea with the change |
-| `diag` | Health check of the agent and its integrations |
+| `I'm building a plant care app for beginners` | The agent researches the market and compares your idea to competitors |
+| `Make me a logo and landing page for my plant care app called Leafy` | A logo SVG and a landing page |
+| `How can my app stand out from the competition?` | Suggestions based on the live comparison |
+| `What should I do next to grow it?` | A workflow plan with next steps |
 
 ## Challenge requirements and evidence
 
 | Requirement | Status | Evidence |
 |---|---|---|
 | Register at least one agent on Agentverse | Done | Agent profile link above |
-| Implement the Agent Chat Protocol | Done | `chat_proto` in `launch_agent.py`: acknowledges every message, handles session start, publishes the manifest |
+| Implement the Agent Chat Protocol | Done | Chat protocol handlers in the agent code |
 | Discoverable and usable through ASI:One | Done | Agent profile README (see `AGENTVERSE_README.md`) and the shared chat link above |
-| Meaningful tool execution | Done | Live Hacker News and Wikipedia APIs, product page fetch, optional GitHub Gist API, 23 automated audit checks, SVG and HTML validation |
-| Multi-step planning and orchestration | Done | The pipeline above, with an audit and repair loop and a conversation router |
+| Meaningful tool execution | Done | Live Tavily search plus Groq-powered analysis and generation of a logo, landing page, suggestions and workflow plan |
+| Multi-step planning and orchestration | Done | Research, then comparison, then asset generation, then planning |
 | Complete primary workflow inside ASI:One | Done | The shared chat link above; no custom frontend |
 | Public GitHub repo with run and test instructions | Done | This README |
-| Bonus: error handling and recovery | Done | Time limit, fallbacks, repair retry, visible errors, `diag` |
-| Bonus: real-time data and external services | Done | Hacker News, Wikipedia, product URL, GitHub Gist |
-| Bonus: ASI Interactive Cards | Not implemented | See the roadmap below |
-| Bonus: multi-agent collaboration | Not in the submitted agent | An earlier multi-agent prototype is described below |
+| Bonus: real-time data and external services | Done | Tavily web search and the Groq API |
 
 ## Run it
 
-### Option A: hosted on Agentverse (what the demo uses)
+### Hosted on Agentverse (what the demo uses)
 
-1. In Agentverse, go to **Agents** and launch a new **Blank** hosted agent named `Launch Kit Agent`.
-2. Replace the contents of `agent.py` with `launch_agent.py` and click **Start**.
-3. Wait for `Launch Kit Agent v3 online. Address: agent1q...` in the logs.
-4. Paste `AGENTVERSE_README.md` into the agent's README tab so ASI:One can discover it.
-5. Optionally add the secrets below, then chat with it.
+1. In Agentverse, create a new hosted agent (**Agents**, then **+ Launch an Agent**, then **Blank Agent**).
+2. Open the **Build** tab. Put the entry code in `agent.py`. If the project has more than one file, create the others with **+ New File**; imports between files work in the hosted editor.
+3. Add your keys under **Secrets** (see below), then click **Start** and check the logs for the agent's address.
+4. Paste `AGENTVERSE_README.md` into the agent's README on its profile so ASI:One can discover it.
+5. Open the agent from its profile (**Chat with Agent**) or find it in ASI:One and start chatting.
 
-### Option B: run locally with a mailbox
+### Configuration
+
+Set these as secrets in Agentverse (or as environment variables if you run locally).
+
+| Variable | Purpose |
+|---|---|
+| `TAVILY_API_KEY` | Live web search. Tavily's free plan includes 1,000 credits per month with no card; a basic search costs 1 credit. |
+| `GROQ_API_KEY` | Access to the Groq-hosted language model. |
+
+> Make sure these names match the ones your code reads. If your code uses different names, update this table.
+
+### Run locally (optional)
 
 ```bash
 git clone <this repo> && cd <this repo>
 uv init            # or: python -m venv .venv && source .venv/bin/activate
 uv add uagents requests
-```
-
-In `launch_agent.py`, change the agent line to:
-
-```python
-agent = Agent(name="launch_kit_agent", seed=os.environ["AGENT_SEED"], port=8001, mailbox=True)
-```
-
-Then:
-
-```bash
+export TAVILY_API_KEY="..."
+export GROQ_API_KEY="..."
 export AGENT_SEED="<a long secret phrase>"
-uv run python launch_agent.py
+uv run python agent.py
 ```
 
-Open the Agent inspector link printed in the logs and connect the **Mailbox**.
-
-### Configuration (all optional)
-
-Set these in Agentverse under the agent's **Secrets**, or as environment variables locally.
-
-| Variable | Purpose |
-|---|---|
-| `ASI_API_KEY` | Enables LLM chat and LLM-written copy. Without it, built-in chat replies and the audited template are used. |
-| `ASI_MODEL` | Model name, default `asi1`. Send `diag` to confirm it works. |
-| `GITHUB_TOKEN` | A token with the `gist` scope. Enables the private Gist publish step. |
+For a local agent, create it with a mailbox (for example `Agent(name="launch_kit_agent", seed=..., port=8001, mailbox=True)`), open the inspector link printed in the logs and connect the **Mailbox** so ASI:One can reach it.
 
 ## Testing
 
-1. Send `diag`. Every line should read OK for the integrations you configured.
-2. Chat for a few turns (`hi`, `how are you?`, `what can you do`) and confirm it replies without building anything.
-3. Run the idea prompts in the table above and check that the audit line reads `AUDIT: PASS`.
-4. Save the landing page output as `index.html` and open it in a browser. Resize the window, toggle dark mode, and open the FAQ items.
-5. Save the logo output as `logo.svg` and open it.
-6. To see the recovery path, set an invalid `ASI_MODEL`. The chat shows the LLM error and the agent still replies and delivers using built-in replies and the audited template.
-
-## Repository layout
-
-| Path | Purpose |
-|---|---|
-| `launch_agent.py` | The submitted agent (single file, hosted-agent compatible) |
-| `AGENTVERSE_README.md` | Text for the Agentverse profile README |
-| Other `*.py` agent files, if present | An earlier multi-agent prototype, kept for reference. Not part of the submitted flow. |
+1. Start the agent and confirm its address appears in the logs with no errors.
+2. Open **Chat with Agent** and send `hi`. You should get a normal reply.
+3. Send a product idea and confirm you get the market comparison and suggestions.
+4. Ask for a logo and a landing page. Save the logo as `logo.svg` and the page as `index.html`, then open both in a browser.
+5. Ask for next steps and confirm a workflow plan comes back.
+6. Remove one API key and confirm the agent responds with a clear message instead of crashing.
 
 ## Limitations
 
-- Without an LLM key, copy comes from a template, so it is clean and audited but generic, and open-ended chat uses built-in replies.
-- Research depends on the public Hacker News and Wikipedia APIs. Niche topics can return few results.
-- The landing page is static HTML with no signup backend. Buttons link to your URL or email when you provide one.
-- The page and logo are delivered as text in the chat; save them to files to open them.
+- Market analysis quality depends on what Tavily finds for your product category. Very niche products may return fewer competitors.
+- Tavily's free tier is limited to 1,000 credits per month and Groq has its own rate limits, so heavy use can hit quotas.
+- The landing page is static HTML with no signup backend, and the logo is a vector concept to refine, not a finished brand identity.
+- Generated suggestions are starting points. Verify competitor details before publishing them.
 
 ## Roadmap
 
-- ASI Interactive Cards: an intake form for tone and brand, a review screen, and approve or revise buttons
-- Re-introduce multi-agent collaboration: specialist agents for research, writing and design, with an independent auditor
+- ASI Interactive Cards for guided intake and review
+- Multiple specialist agents (research, design, strategy) collaborating
+- More data sources and one-click hosting of the landing pagealist agents for research, writing and design, with an independent auditor
 - More data sources and one-click hosting of the landing page

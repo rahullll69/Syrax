@@ -2,8 +2,8 @@
 ![tag:hackathon](https://img.shields.io/badge/hackathon-5F43F1)
 
 <p align="center">
-  <img src="assets/pixel-cat.svg" width="128" alt="Pixel art cat">
-  <img src="assets/pixel-dragon.svg" width="128" alt="Pixel art dragon">
+  <img src="assets/pixel-cat.svg" width="96" alt="Pixel art cat">
+  <img src="assets/pixel-dragon.svg" width="96" alt="Pixel art dragon">
 </p>
 
 # Launch Kit Agent

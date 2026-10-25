@@ -16,9 +16,9 @@ An AI agent on Agentverse, used through ASI:One, that turns a product idea into 
 
 | What | Link |
 |---|---|
-| ASI:One shared chat (full workflow) | `<add shared chat URL>` |
-| Agentverse agent profile | `<add agent profile URL>` |
-| Demo video | `<add video URL>` |
+| ASI:One shared chat | `https://asi1.ai/ai/agent1qvc7sunrshhkkgg2lps6fyrpwkfy8rj45eqmexd242flwdmsz2tvux4ms6c` |
+| Agentverse agent profile | `@agent1qvc7sunrshhkkgg2lps6fyrpwkfy8rj45eqmexd242flwdmsz2tvux4ms6c` |
+| Demo video | `https://drive.google.com/drive/folders/1lIcsTSiy4dOaB9ARpNVfldrr28NoD_hK?usp=drive_link` |
 
 ## The problem
 
